@@ -7,7 +7,6 @@
   var INTRO_MS = 7000;
   var OUTRO_MS = 9000;
   var MUSIC_VOLUME = 0.5;
-  var MUSIC_DUCK_VOLUME = MUSIC_VOLUME * 0.2;
   var MUSIC_FADE_MS = 600;
 
   var stage = document.getElementById("stage");
@@ -246,10 +245,12 @@
     return IMAGE_MS;
   }
 
-  /* ---------- duck background music while a video plays ---------- */
+  /* ---------- stop background music while a video plays ---------- */
   var musicFadeRaf = null;
+  var musicWantsPlay = false; // true once autoplay succeeds or the user turns music on
+  var musicDuckedForVideo = false; // true while music is paused for an active video
 
-  function fadeMusicTo(target) {
+  function fadeMusicVolume(target, onComplete) {
     if (!DATA.music) return;
     if (musicFadeRaf) cancelAnimationFrame(musicFadeRaf);
     var start = musicEl.volume;
@@ -258,18 +259,42 @@
       if (!startTs) startTs = ts;
       var t = Math.min(1, (ts - startTs) / MUSIC_FADE_MS);
       musicEl.volume = start + (target - start) * t;
-      musicFadeRaf = t < 1 ? requestAnimationFrame(step) : null;
+      if (t < 1) {
+        musicFadeRaf = requestAnimationFrame(step);
+      } else {
+        musicFadeRaf = null;
+        if (onComplete) onComplete();
+      }
     }
     musicFadeRaf = requestAnimationFrame(step);
   }
 
-  function updateMusicDuck() {
+  function updateMusicForVideo() {
+    if (!DATA.music) return;
     var s = slides[si];
     var item = s.items ? s.items[ii] : null;
     var v = activeVideo();
     var videoPlaying =
       item && item.type === "video" && v && !v.paused && !v.ended;
-    fadeMusicTo(videoPlaying ? MUSIC_DUCK_VOLUME : MUSIC_VOLUME);
+
+    if (videoPlaying) {
+      if (!musicDuckedForVideo) {
+        musicDuckedForVideo = true;
+        fadeMusicVolume(0, function () {
+          musicEl.pause();
+        });
+      }
+    } else if (musicDuckedForVideo) {
+      musicDuckedForVideo = false;
+      if (musicWantsPlay) {
+        musicEl
+          .play()
+          .then(function () {
+            fadeMusicVolume(MUSIC_VOLUME);
+          })
+          .catch(function () {});
+      }
+    }
   }
 
   /* ---------- rendering the current position ---------- */
@@ -306,7 +331,7 @@
       var blur = card.querySelector("video.media-blur");
       if (blur && !paused) blur.play().catch(function () {});
     }
-    updateMusicDuck();
+    updateMusicForVideo();
 
     elapsed = 0;
     paintProgress(0);
@@ -380,7 +405,7 @@
       if (p) blur.pause();
       else blur.play().catch(function () {});
     }
-    updateMusicDuck();
+    updateMusicForVideo();
   }
 
   function start() {
@@ -493,10 +518,14 @@
     musicBtn.addEventListener("click", function (e) {
       e.stopPropagation();
       if (musicEl.paused) {
-        musicEl.play().catch(function () {});
+        musicWantsPlay = true;
         musicBtn.classList.remove("is-off");
-        updateMusicDuck();
+        if (!musicDuckedForVideo) {
+          musicEl.volume = MUSIC_VOLUME;
+          musicEl.play().catch(function () {});
+        }
       } else {
+        musicWantsPlay = false;
         musicEl.pause();
         musicBtn.classList.add("is-off");
       }
@@ -506,14 +535,16 @@
       musicEl.play().then(
         function () {
           musicBtn.classList.remove("is-off");
-          updateMusicDuck();
+          musicWantsPlay = true;
+          updateMusicForVideo();
         },
         function () {
           /* autoplay blocked; start on first user interaction */
           var startOnInteraction = function () {
             musicEl.play().catch(function () {});
             musicBtn.classList.remove("is-off");
-            updateMusicDuck();
+            musicWantsPlay = true;
+            updateMusicForVideo();
             document.removeEventListener("pointerdown", startOnInteraction);
             document.removeEventListener("keydown", startOnInteraction);
           };
