@@ -408,27 +408,12 @@
     updateMusicForVideo();
   }
 
-  function requestFullscreenBestEffort() {
-    var el = document.documentElement;
-    var request =
-      el.requestFullscreen ||
-      el.webkitRequestFullscreen ||
-      el.webkitEnterFullscreen ||
-      el.msRequestFullscreen;
-    if (!request) return;
-    try {
-      var result = request.call(el);
-      if (result && result.catch) result.catch(function () {});
-    } catch (e) {}
-  }
-
   function start() {
     started = true;
     paused = false;
     pausedPill.classList.remove("is-visible");
     si = 1;
     ii = 0;
-    requestFullscreenBestEffort();
     render();
   }
 
