@@ -45,11 +45,15 @@ body {
 
 /* ---------- phone frame ---------- */
 .frame {
-  position: relative;
+  /* fixed + inset:0 with no explicit height lets the box fill the exact
+     top-to-bottom viewport rect (which already spans the safe areas thanks
+     to viewport-fit=cover), instead of relying on dvh unit math that some
+     iOS versions get wrong under the notch / home indicator */
+  position: fixed;
+  inset: 0;
   z-index: 1;
   width: 100%;
   max-width: var(--frame-max-width);
-  height: 100dvh;
   margin: 0 auto;
   overflow: hidden;
   background: #000;

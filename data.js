@@ -10,7 +10,7 @@
  */
 window.STORY_DATA = {
   intro: {
-    title: "19 Months",
+    title: "18 Months",
     subtitle: "Countless places. One us.",
   },
   memories: [
