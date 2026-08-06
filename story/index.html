@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1"
+    />
+    <title>19 Months</title>
+    <meta
+      name="description"
+      content="A story of nineteen months, one card at a time."
+    />
+    <meta property="og:title" content="19 Months" />
+    <meta
+      property="og:description"
+      content="A story of nineteen months, one card at a time."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  </head>
+  <body>
+    <div class="backdrop" id="backdrop"></div>
+
+    <main class="frame" id="frame" aria-label="19 Months story">
+      <div class="stage" id="stage"></div>
+
+      <div class="progress" id="progress" aria-hidden="true"></div>
+
+      <button
+        class="music-toggle"
+        id="musicToggle"
+        type="button"
+        aria-label="Toggle music"
+        hidden
+      >
+        <span id="musicIcon">♪</span>
+      </button>
+
+      <div class="tap-zones" id="tapZones">
+        <div class="tap-zone tap-prev" data-dir="prev"></div>
+        <div class="tap-zone tap-next" data-dir="next"></div>
+      </div>
+
+      <div class="paused-pill" id="pausedPill">Paused</div>
+    </main>
+
+    <audio id="music" loop preload="none"></audio>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
