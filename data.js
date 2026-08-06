@@ -6,6 +6,11 @@
  *   { "type": "image", "src": "media/01-1.jpg", "orientation": "portrait" }
  *   { "type": "video", "src": "media/01-2.mp4", "orientation": "landscape", "poster": "media/01-2-poster.jpg" }
  *
+ * Videos default to stopping the background music and playing with sound.
+ * Add "stopsMusic": false to a video to keep the music playing instead —
+ * that video will play muted.
+ *   { "type": "video", "src": "media/01-2.mp4", "orientation": "portrait", "stopsMusic": false }
+ *
  * Leave "media": [] to show a bold accent-color card instead.
  */
 window.STORY_DATA = {
@@ -48,7 +53,12 @@ window.STORY_DATA = {
         { type: "image", src: "media/2025-04/03.jpg", orientation: "portrait" },
         { type: "image", src: "media/2025-04/04.jpg", orientation: "portrait" },
         { type: "image", src: "media/2025-04/05.jpg", orientation: "portrait" },
-        { type: "video", src: "media/2025-04/06.mp4", orientation: "portrait" },
+        {
+          type: "video",
+          src: "media/2025-04/06.mp4",
+          orientation: "portrait",
+          stopsMusic: true,
+        },
         { type: "image", src: "media/2025-04/07.jpg", orientation: "portrait" },
         { type: "image", src: "media/2025-04/08.jpg", orientation: "portrait" },
         { type: "image", src: "media/2025-04/09.jpg", orientation: "portrait" },
@@ -146,7 +156,12 @@ window.STORY_DATA = {
         { type: "image", src: "media/2025-10/05.jpg", orientation: "portrait" },
         { type: "image", src: "media/2025-10/06.jpg", orientation: "portrait" },
         { type: "image", src: "media/2025-10/07.jpg", orientation: "portrait" },
-        { type: "video", src: "media/2025-10/08.mp4", orientation: "portrait" },
+        {
+          type: "video",
+          src: "media/2025-10/08.mp4",
+          orientation: "portrait",
+          stopsMusic: false,
+        },
         { type: "image", src: "media/2025-10/09.jpg", orientation: "portrait" },
       ],
     },
@@ -264,7 +279,12 @@ window.STORY_DATA = {
         },
         { type: "image", src: "media/2026-05/03.jpg", orientation: "portrait" },
         { type: "image", src: "media/2026-05/04.jpg", orientation: "portrait" },
-        { type: "video", src: "media/2026-05/05.mp4", orientation: "portrait" },
+        {
+          type: "video",
+          src: "media/2026-05/05.mp4",
+          orientation: "portrait",
+          stopsMusic: true,
+        },
       ],
     },
     {
@@ -275,7 +295,12 @@ window.STORY_DATA = {
         "Some ups and downs in the new city, but the memories we made are glorious.",
       accentColor: "#FB7185",
       media: [
-        { type: "video", src: "media/2026-06/01.mp4", orientation: "portrait" },
+        {
+          type: "video",
+          src: "media/2026-06/01.mp4",
+          orientation: "portrait",
+          stopsMusic: false,
+        },
         { type: "image", src: "media/2026-06/02.jpg", orientation: "portrait" },
         { type: "image", src: "media/2026-06/03.jpg", orientation: "portrait" },
         { type: "image", src: "media/2026-06/04.jpg", orientation: "portrait" },

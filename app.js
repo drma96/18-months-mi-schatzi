@@ -117,7 +117,7 @@
       el = document.createElement("video");
       el.src = item.src;
       if (item.poster) el.poster = item.poster;
-      el.muted = false;
+      el.muted = item.stopsMusic === false;
       el.playsInline = true;
       el.setAttribute("playsinline", "");
       el.setAttribute("webkit-playsinline", "");
@@ -275,7 +275,12 @@
     var item = s.items ? s.items[ii] : null;
     var v = activeVideo();
     var videoPlaying =
-      item && item.type === "video" && v && !v.paused && !v.ended;
+      item &&
+      item.type === "video" &&
+      item.stopsMusic !== false &&
+      v &&
+      !v.paused &&
+      !v.ended;
 
     if (videoPlaying) {
       if (!musicDuckedForVideo) {
