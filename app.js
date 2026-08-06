@@ -490,50 +490,6 @@
     e.preventDefault();
   });
 
-  /* ---------- kill iOS pinch/double-tap zoom (touch-action isn't reliable in Safari) ---------- */
-  ["gesturestart", "gesturechange", "gestureend"].forEach(function (type) {
-    document.addEventListener(
-      type,
-      function (e) {
-        e.preventDefault();
-      },
-      { passive: false },
-    );
-  });
-  document.addEventListener(
-    "touchmove",
-    function (e) {
-      if (e.touches.length > 1) e.preventDefault();
-    },
-    { passive: false },
-  );
-  var lastTouchEnd = 0;
-  document.addEventListener(
-    "touchend",
-    function (e) {
-      var now = Date.now();
-      if (now - lastTouchEnd < 500) e.preventDefault();
-      lastTouchEnd = now;
-    },
-    { passive: false },
-  );
-
-  /* safety net: if iOS still manages to zoom in (e.g. a double-tap lands
-     while a card is mid-swap and touch-action briefly loses the gesture),
-     force the viewport back to scale 1 instead of leaving the user stuck. */
-  if (window.visualViewport) {
-    var viewportMeta = document.querySelector('meta[name="viewport"]');
-    var resetZoom = function () {
-      if (!viewportMeta) return;
-      var content = viewportMeta.getAttribute("content");
-      viewportMeta.setAttribute("content", content + ",");
-      viewportMeta.setAttribute("content", content);
-    };
-    window.visualViewport.addEventListener("resize", function () {
-      if (window.visualViewport.scale > 1.001) resetZoom();
-    });
-  }
-
   document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight") {
       if (!started) start();
