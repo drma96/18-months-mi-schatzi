@@ -20,7 +20,13 @@ body {
   background: #000;
   color: #fff;
   font-family:
-    ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial,
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Inter,
+    Helvetica,
+    Arial,
     sans-serif;
   overflow: hidden;
   overscroll-behavior: none;
@@ -39,7 +45,9 @@ body {
   background-color: #0a0a0a;
   filter: blur(48px) saturate(140%) brightness(0.4);
   transform: scale(1.1);
-  transition: background-image var(--transition), background-color var(--transition);
+  transition:
+    background-image var(--transition),
+    background-color var(--transition);
   z-index: 0;
 }
 
@@ -65,7 +73,9 @@ body {
     height: min(100dvh, 940px);
     margin-top: max(0px, calc((100dvh - min(100dvh, 940px)) / 2));
     border-radius: 28px;
-    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 40px 120px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -80,7 +90,9 @@ body {
   inset: 0;
   opacity: 0;
   transform: scale(1.03);
-  transition: opacity var(--transition), transform var(--transition);
+  transition:
+    opacity var(--transition),
+    transform var(--transition);
   pointer-events: none;
   display: flex;
   flex-direction: column;
@@ -98,12 +110,17 @@ body {
 .card-fallback {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       120% 90% at 20% 10%,
       color-mix(in oklab, var(--accent) 85%, white 15%) 0%,
       transparent 60%
     ),
-    linear-gradient(160deg, var(--accent) 0%, color-mix(in oklab, var(--accent) 40%, black) 100%);
+    linear-gradient(
+      160deg,
+      var(--accent) 0%,
+      color-mix(in oklab, var(--accent) 40%, black) 100%
+    );
 }
 
 .media-layer {
@@ -220,7 +237,8 @@ body {
 .intro-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(90% 60% at 50% 20%, #ff6b6b33 0%, transparent 60%),
+  background:
+    radial-gradient(90% 60% at 50% 20%, #ff6b6b33 0%, transparent 60%),
     radial-gradient(90% 60% at 50% 100%, #818cf83d 0%, transparent 60%), #07070a;
 }
 
