@@ -9,7 +9,7 @@
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 html,
@@ -24,7 +24,7 @@ body {
     sans-serif;
   overflow: hidden;
   overscroll-behavior: none;
-  touch-action: manipulation;
+  touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;

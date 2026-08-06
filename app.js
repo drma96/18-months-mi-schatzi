@@ -408,12 +408,27 @@
     updateMusicForVideo();
   }
 
+  function requestFullscreenBestEffort() {
+    var el = document.documentElement;
+    var request =
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.webkitEnterFullscreen ||
+      el.msRequestFullscreen;
+    if (!request) return;
+    try {
+      var result = request.call(el);
+      if (result && result.catch) result.catch(function () {});
+    } catch (e) {}
+  }
+
   function start() {
     started = true;
     paused = false;
     pausedPill.classList.remove("is-visible");
     si = 1;
     ii = 0;
+    requestFullscreenBestEffort();
     render();
   }
 
@@ -489,6 +504,34 @@
   tapZones.addEventListener("contextmenu", function (e) {
     e.preventDefault();
   });
+
+  /* ---------- kill iOS pinch/double-tap zoom (touch-action isn't reliable in Safari) ---------- */
+  ["gesturestart", "gesturechange", "gestureend"].forEach(function (type) {
+    document.addEventListener(
+      type,
+      function (e) {
+        e.preventDefault();
+      },
+      { passive: false },
+    );
+  });
+  document.addEventListener(
+    "touchmove",
+    function (e) {
+      if (e.touches.length > 1) e.preventDefault();
+    },
+    { passive: false },
+  );
+  var lastTouchEnd = 0;
+  document.addEventListener(
+    "touchend",
+    function (e) {
+      var now = Date.now();
+      if (now - lastTouchEnd < 350) e.preventDefault();
+      lastTouchEnd = now;
+    },
+    { passive: false },
+  );
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight") {
